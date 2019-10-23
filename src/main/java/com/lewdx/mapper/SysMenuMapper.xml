@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lewdx.mapper.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="com.lewdx.entity.SysMenu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="menu_parentid" jdbcType="INTEGER" property="menuParentid" />
+    <result column="menu_type" jdbcType="INTEGER" property="menuType" />
+    <result column="menu_path" jdbcType="VARCHAR" property="menuPath" />
+    <result column="menu_desc" jdbcType="VARCHAR" property="menuDesc" />
+    <result column="flag" jdbcType="BIT" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, menu_name, menu_parentid, menu_type, menu_path, menu_desc, flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lewdx.entity.SysMenu">
+    insert into sys_menu (id, menu_name, menu_parentid, 
+      menu_type, menu_path, menu_desc, 
+      flag)
+    values (#{id,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{menuParentid,jdbcType=INTEGER}, 
+      #{menuType,jdbcType=INTEGER}, #{menuPath,jdbcType=VARCHAR}, #{menuDesc,jdbcType=VARCHAR},
+      #{flag,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lewdx.entity.SysMenu">
+    insert into sys_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="menuName != null">
+        menu_name,
+      </if>
+      <if test="menuParentid != null">
+        menu_parentid,
+      </if>
+      <if test="menuType != null">
+        menu_type,
+      </if>
+      <if test="menuPath != null">
+        menu_path,
+      </if>
+      <if test="menuDesc != null">
+        menu_desc,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParentid != null">
+        #{menuParentid,jdbcType=INTEGER},
+      </if>
+      <if test="menuType != null">
+        #{menuType,jdbcType=INTEGER},
+      </if>
+      <if test="menuPath != null">
+        #{menuPath,jdbcType=VARCHAR},
+      </if>
+      <if test="menuDesc != null">
+        #{menuDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lewdx.entity.SysMenu">
+    update sys_menu
+    <set>
+      <if test="menuName != null">
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParentid != null">
+        menu_parentid = #{menuParentid,jdbcType=INTEGER},
+      </if>
+      <if test="menuType != null">
+        menu_type = #{menuType,jdbcType=INTEGER},
+      </if>
+      <if test="menuPath != null">
+        menu_path = #{menuPath,jdbcType=VARCHAR},
+      </if>
+      <if test="menuDesc != null">
+        menu_desc = #{menuDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lewdx.entity.SysMenu">
+    update sys_menu
+    set menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_parentid = #{menuParentid,jdbcType=INTEGER},
+      menu_type = #{menuType,jdbcType=INTEGER},
+      menu_path = #{menuPath,jdbcType=VARCHAR},
+      menu_desc = #{menuDesc,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <!--获取菜单集合-->
+    <select id="getMenuList" resultMap="BaseResultMap">
+      select * from sys_menu where flag=1
+    </select>
+    <!--根据角色获取菜单集合-->
+    <select id="getMenuListByRoleId" parameterType="int" resultType="int">
+    SELECT m.id from sys_menu m WHERE id in
+    (SELECT MENU_ID FROM sys_role_menu where ROLE_ID=#{roleId})
+    </select>
+    <!---->
+    <delete id="deleteRoleMenuByRoleId" parameterType="int">
+      delete from sys_role_menu where role_id=#{roleId}
+    </delete>
+    <insert id="addRoleMenu" >
+      insert into sys_role_menu(role_id,menu_id) values
+      <foreach collection="ids" item="menu_id" separator=",">
+        (#{roleId},#{menu_id})
+      </foreach>
+    </insert>
+
+    <!--根据用户ID获取菜单列表-->
+    <select id="getMenuListByUserId" parameterType="int" resultMap="BaseResultMap">
+      select distinct m.*
+      from sys_role_user ru,sys_role_menu rm,sys_menu m
+      where ru.user_id = #{id}
+      and ru.role_id = rm.role_id
+      and rm.menu_id = m.id
+      and m.flag = 1
+    </select>
+</mapper>

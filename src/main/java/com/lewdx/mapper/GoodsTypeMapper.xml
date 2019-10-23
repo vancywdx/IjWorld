@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lewdx.mapper.GoodsTypeMapper">
+  <resultMap id="BaseResultMap" type="com.lewdx.entity.GoodsType">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="gtype_name" jdbcType="VARCHAR" property="gtypeName" />
+    <result column="gtype_parentid" jdbcType="INTEGER" property="gtypeParentid" />
+    <result column="gtype_parentName" jdbcType="VARCHAR" property="gtypeParentName"/>
+    <result column="flag" jdbcType="BOOLEAN" property="flag"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, gtype_name, gtype_parentid,
+  </sql>
+
+  <!--根据ID查询-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select gt1.*, gt2.gtype_name as gtype_parentName
+    from t_goods_type gt1 left join t_goods_type gt2
+    on gt1.gtype_parentid = gt2.id
+    where gt1.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--根据ID删除商品类别信息-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_goods_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <!--添加商品类别信息（所有属性）-->
+  <insert id="insert" parameterType="com.lewdx.entity.GoodsType">
+    insert into t_goods_type (id, gtype_name, gtype_parentid
+      )
+    values (#{id,jdbcType=INTEGER}, #{gtypeName,jdbcType=VARCHAR}, #{gtypeParentid,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <!--添加商品类别信息（可选属性）-->
+  <insert id="insertSelective" parameterType="com.lewdx.entity.GoodsType">
+    insert into t_goods_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gtypeName != null">
+        gtype_name,
+      </if>
+      <if test="gtypeParentid != null">
+        gtype_parentid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="gtypeName != null">
+        #{gtypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="gtypeParentid != null">
+        #{gtypeParentid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <!--修改商品类别信息（可选属性）-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.lewdx.entity.GoodsType">
+    update t_goods_type
+    <set>
+      <if test="gtypeName != null">
+        gtype_name = #{gtypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="gtypeParentid != null">
+        gtype_parentid = #{gtypeParentid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--修改商品类别信息（全部属性）-->
+  <update id="updateByPrimaryKey" parameterType="com.lewdx.entity.GoodsType">
+    update t_goods_type
+    set gtype_name = #{gtypeName,jdbcType=VARCHAR},
+      gtype_parentid = #{gtypeParentid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--根据名称查询商品类别列表-->
+  <select id="getGoodsTypeListByName" parameterType="string" resultMap="BaseResultMap">
+    select gt1.*, gt2.gtype_name as gtype_parentName
+    from t_goods_type gt1
+    left join t_goods_type gt2
+    on gt1.gtype_parentid = gt2.id
+    <where>
+        <if test="_parameter!=null and _parameter!=''">
+          gt1.gtype_name like concat('%',#{gtypeName},'%')
+        </if>
+    </where>
+  </select>
+
+  <!--停用商品类别-->
+  <update id="stopGoodsType" parameterType="int">
+    update t_goods_type
+    set flag=0
+    where id = #{id}
+  </update>
+
+  <!--启用商品类别-->
+  <update id="startGoodsType" parameterType="int">
+    update t_goods_type
+    set flag=1
+    where id = #{id}
+  </update>
+
+  <!--获取商品大类信息-->
+  <select id="getGoodsTypeParentList" resultType="com.lewdx.entity.GoodsType">
+    select id,gtype_name as gtypeName
+    from t_goods_type
+    where gtype_parentid = 0
+  </select>
+
+  <!--根据ID获取二级商品类别信息-->
+  <select id="getGoodsTypeListByParentid" parameterType="int" resultMap="BaseResultMap">
+    select * from t_goods_type where gtype_parentid = #{id}
+  </select>
+
+</mapper>

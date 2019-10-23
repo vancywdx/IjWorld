@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lewdx.mapper.OrderDetailMapper">
+  <resultMap id="BaseResultMap" type="com.lewdx.entity.OrderDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_price" jdbcType="DOUBLE" property="goodsPrice" />
+    <result column="goods_desc" jdbcType="VARCHAR" property="goodsDesc" />
+    <result column="goods_num" jdbcType="INTEGER" property="goodsNum" />
+    <result column="goods_pic" jdbcType="VARCHAR" property="goodsPic" />
+    <result column="goods_total_price" jdbcType="DOUBLE" property="goodsTotalPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_id, goods_id, goods_name, goods_price, goods_desc, goods_num, goods_pic, 
+    goods_total_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lewdx.entity.OrderDetail">
+    insert into t_order_detail (id, order_id, goods_id, 
+      goods_name, goods_price, goods_desc, 
+      goods_num, goods_pic, goods_total_price
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DOUBLE}, #{goodsDesc,jdbcType=VARCHAR}, 
+      #{goodsNum,jdbcType=INTEGER}, #{goodsPic,jdbcType=VARCHAR}, #{goodsTotalPrice,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lewdx.entity.OrderDetail">
+    insert into t_order_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="goodsDesc != null">
+        goods_desc,
+      </if>
+      <if test="goodsNum != null">
+        goods_num,
+      </if>
+      <if test="goodsPic != null">
+        goods_pic,
+      </if>
+      <if test="goodsTotalPrice != null">
+        goods_total_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsDesc != null">
+        #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null">
+        #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPic != null">
+        #{goodsPic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTotalPrice != null">
+        #{goodsTotalPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lewdx.entity.OrderDetail">
+    update t_order_detail
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsDesc != null">
+        goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNum != null">
+        goods_num = #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPic != null">
+        goods_pic = #{goodsPic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTotalPrice != null">
+        goods_total_price = #{goodsTotalPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lewdx.entity.OrderDetail">
+    update t_order_detail
+    set order_id = #{orderId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      goods_num = #{goodsNum,jdbcType=INTEGER},
+      goods_pic = #{goodsPic,jdbcType=VARCHAR},
+      goods_total_price = #{goodsTotalPrice,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getOrderDetailByOrderId" resultMap="BaseResultMap" parameterType="int">
+    select * from t_order_detail where order_id = #{id}
+  </select>
+
+  <!--批量添加订单详情-->
+  <insert id="batchAddOrderDetail" parameterType="list">
+    insert into t_order_detail(order_id,goods_id,goods_name,goods_price,goods_desc,goods_num,goods_pic,goods_total_price)
+    values
+    <foreach collection="list" item="od" separator=",">
+      (#{od.orderId},#{od.goodsId},#{od.goodsName},#{od.goodsPrice},#{od.goodsDesc},#{od.goodsNum},#{od.goodsPic},#{od.goodsTotalPrice})
+    </foreach>
+  </insert>
+</mapper>

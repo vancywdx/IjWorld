@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lewdx.mapper.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.lewdx.entity.Goods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_desc" jdbcType="VARCHAR" property="goodsDesc" />
+    <result column="goods_pic" jdbcType="VARCHAR" property="goodsPic" />
+    <result column="goods_price" jdbcType="DOUBLE" property="goodsPrice" />
+    <result column="goods_stock" jdbcType="INTEGER" property="goodsStock" />
+    <result column="goods_price_off" jdbcType="DOUBLE" property="goodsPriceOff" />
+    <result column="goods_discount" jdbcType="DOUBLE" property="goodsDiscount" />
+    <result column="goods_fatherid" jdbcType="INTEGER" property="goodsFatherid" />
+    <result column="goods_parentid" jdbcType="INTEGER" property="goodsParentid" />
+    <result column="goods_brandid" jdbcType="INTEGER" property="goodsBrandid" />
+    <result column="flag" jdbcType="BIT" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_name, goods_desc, goods_pic, goods_price, goods_stock, goods_price_off, 
+    goods_discount, goods_fatherid, goods_parentid, goods_brandid, flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_goods_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lewdx.entity.Goods">
+    insert into t_goods_info (id, goods_name, goods_desc, 
+      goods_pic, goods_price, goods_stock, 
+      goods_price_off, goods_discount, goods_fatherid, 
+      goods_parentid, goods_brandid, flag
+      )
+    values (#{id,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsDesc,jdbcType=VARCHAR}, 
+      #{goodsPic,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DOUBLE}, #{goodsStock,jdbcType=INTEGER}, 
+      #{goodsPriceOff,jdbcType=DOUBLE}, #{goodsDiscount,jdbcType=DOUBLE}, #{goodsFatherid,jdbcType=INTEGER}, 
+      #{goodsParentid,jdbcType=INTEGER}, #{goodsBrandid,jdbcType=INTEGER}, #{flag,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lewdx.entity.Goods">
+    insert into t_goods_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsDesc != null">
+        goods_desc,
+      </if>
+      <if test="goodsPic != null">
+        goods_pic,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="goodsStock != null">
+        goods_stock,
+      </if>
+      <if test="goodsPriceOff != null">
+        goods_price_off,
+      </if>
+      <if test="goodsDiscount != null">
+        goods_discount,
+      </if>
+      <if test="goodsFatherid != null">
+        goods_fatherid,
+      </if>
+      <if test="goodsParentid != null">
+        goods_parentid,
+      </if>
+      <if test="goodsBrandid != null">
+        goods_brandid,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDesc != null">
+        #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPic != null">
+        #{goodsPic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsStock != null">
+        #{goodsStock,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPriceOff != null">
+        #{goodsPriceOff,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsDiscount != null">
+        #{goodsDiscount,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsFatherid != null">
+        #{goodsFatherid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsParentid != null">
+        #{goodsParentid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsBrandid != null">
+        #{goodsBrandid,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lewdx.entity.Goods">
+    update t_goods_info
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDesc != null">
+        goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPic != null">
+        goods_pic = #{goodsPic,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsStock != null">
+        goods_stock = #{goodsStock,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPriceOff != null">
+        goods_price_off = #{goodsPriceOff,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsDiscount != null">
+        goods_discount = #{goodsDiscount,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsFatherid != null">
+        goods_fatherid = #{goodsFatherid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsParentid != null">
+        goods_parentid = #{goodsParentid,jdbcType=INTEGER},
+      </if>
+      <if test="goodsBrandid != null">
+        goods_brandid = #{goodsBrandid,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lewdx.entity.Goods">
+    update t_goods_info
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_desc = #{goodsDesc,jdbcType=VARCHAR},
+      goods_pic = #{goodsPic,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      goods_stock = #{goodsStock,jdbcType=INTEGER},
+      goods_price_off = #{goodsPriceOff,jdbcType=DOUBLE},
+      goods_discount = #{goodsDiscount,jdbcType=DOUBLE},
+      goods_fatherid = #{goodsFatherid,jdbcType=INTEGER},
+      goods_parentid = #{goodsParentid,jdbcType=INTEGER},
+      goods_brandid = #{goodsBrandid,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--根据商品名称查询商品列表-->
+  <select id="getGoodsListByName" parameterType="string" resultMap="BaseResultMap">
+    select *
+    from t_goods_info
+    <where>
+      <if test="_parameter!=null and _parameter!=''">
+        goods_name like concat('%', #{goodsName}, '%')
+      </if>
+    </where>
+  </select>
+
+  <!--下架商品-->
+  <update id="stopGoods" parameterType="int">
+    update t_goods_info
+    set flag=0
+    where id = #{id}
+  </update>
+
+  <!--上架商品-->
+  <update id="startGoods" parameterType="int">
+    update t_goods_info
+    set flag=1
+    where id = #{id}
+  </update>
+  <!--根据父类id获取商品信息-->
+  <select id="getGoodsListByParentId" parameterType="int" resultMap="BaseResultMap">
+    SELECT * from t_goods_info WHERE goods_parentid = #{parentId} and flag = 1
+  </select>
+  <!--根据品牌id获取商品信息-->
+  <select id="getGoodsListByBrandId" parameterType="int" resultMap="BaseResultMap">
+    SELECT * from t_goods_info WHERE goods_brandid = #{brandId} and flag = 1
+  </select>
+
+  <!--根据条件获取商品信息列表（展示到前台）-->
+  <select id="getGoodsList" parameterType="string" resultMap="BaseResultMap">
+    select *
+    from t_goods_info
+    <where>
+      <if test="_parameter!=null and _parameter!=''">
+        goods_name like concat('%', #{goodsName}, '%')
+      </if>
+      and flag = 1
+    </where>
+  </select>
+
+</mapper>

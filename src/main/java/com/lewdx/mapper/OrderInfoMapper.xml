@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lewdx.mapper.OrderInfoMapper">
+  <resultMap id="BaseResultMap" type="com.lewdx.entity.OrderInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="o_express" jdbcType="VARCHAR" property="oExpress" />
+    <result column="o_paytype" jdbcType="VARCHAR" property="oPaytype" />
+    <result column="o_paycount" jdbcType="DOUBLE" property="oPaycount" />
+    <result column="o_orderdate" jdbcType="DATE" property="oOrderdate" />
+    <result column="o_orderstatus" jdbcType="INTEGER" property="oOrderstatus" />
+    <result column="o_shippingstatus" jdbcType="BIT" property="oShippingstatus" />
+    <result column="o_paystatus" jdbcType="BIT" property="oPaystatus" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="o_receiver" jdbcType="VARCHAR" property="oReceiver" />
+    <result column="o_recphone" jdbcType="VARCHAR" property="oRecphone" />
+    <result column="o_recaddres" jdbcType="VARCHAR" property="oRecaddres" />
+    <result column="flag" jdbcType="BIT" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, o_express, o_paytype, o_paycount, o_orderdate, o_orderstatus, o_shippingstatus, 
+    o_paystatus, userid, o_receiver, o_recphone, o_recaddres, flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_order_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lewdx.entity.OrderInfo">
+    insert into t_order_info (id, o_express, o_paytype, 
+      o_paycount, o_orderdate, o_orderstatus, 
+      o_shippingstatus, o_paystatus, userid, 
+      o_receiver, o_recphone, o_recaddres, 
+      flag)
+    values (#{id,jdbcType=INTEGER}, #{oExpress,jdbcType=VARCHAR}, #{oPaytype,jdbcType=VARCHAR}, 
+      #{oPaycount,jdbcType=DOUBLE}, #{oOrderdate,jdbcType=DATE}, #{oOrderstatus,jdbcType=INTEGER}, 
+      #{oShippingstatus,jdbcType=BIT}, #{oPaystatus,jdbcType=BIT}, #{userid,jdbcType=INTEGER}, 
+      #{oReceiver,jdbcType=VARCHAR}, #{oRecphone,jdbcType=VARCHAR}, #{oRecaddres,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lewdx.entity.OrderInfo">
+    insert into t_order_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="oExpress != null">
+        o_express,
+      </if>
+      <if test="oPaytype != null">
+        o_paytype,
+      </if>
+      <if test="oPaycount != null">
+        o_paycount,
+      </if>
+      <if test="oOrderdate != null">
+        o_orderdate,
+      </if>
+      <if test="oOrderstatus != null">
+        o_orderstatus,
+      </if>
+      <if test="oShippingstatus != null">
+        o_shippingstatus,
+      </if>
+      <if test="oPaystatus != null">
+        o_paystatus,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="oReceiver != null">
+        o_receiver,
+      </if>
+      <if test="oRecphone != null">
+        o_recphone,
+      </if>
+      <if test="oRecaddres != null">
+        o_recaddres,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="oExpress != null">
+        #{oExpress,jdbcType=VARCHAR},
+      </if>
+      <if test="oPaytype != null">
+        #{oPaytype,jdbcType=VARCHAR},
+      </if>
+      <if test="oPaycount != null">
+        #{oPaycount,jdbcType=DOUBLE},
+      </if>
+      <if test="oOrderdate != null">
+        #{oOrderdate,jdbcType=DATE},
+      </if>
+      <if test="oOrderstatus != null">
+        #{oOrderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="oShippingstatus != null">
+        #{oShippingstatus,jdbcType=BIT},
+      </if>
+      <if test="oPaystatus != null">
+        #{oPaystatus,jdbcType=BIT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="oReceiver != null">
+        #{oReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="oRecphone != null">
+        #{oRecphone,jdbcType=VARCHAR},
+      </if>
+      <if test="oRecaddres != null">
+        #{oRecaddres,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lewdx.entity.OrderInfo">
+    update t_order_info
+    <set>
+      <if test="oExpress != null">
+        o_express = #{oExpress,jdbcType=VARCHAR},
+      </if>
+      <if test="oPaytype != null">
+        o_paytype = #{oPaytype,jdbcType=VARCHAR},
+      </if>
+      <if test="oPaycount != null">
+        o_paycount = #{oPaycount,jdbcType=DOUBLE},
+      </if>
+      <if test="oOrderdate != null">
+        o_orderdate = #{oOrderdate,jdbcType=DATE},
+      </if>
+      <if test="oOrderstatus != null">
+        o_orderstatus = #{oOrderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="oShippingstatus != null">
+        o_shippingstatus = #{oShippingstatus,jdbcType=BIT},
+      </if>
+      <if test="oPaystatus != null">
+        o_paystatus = #{oPaystatus,jdbcType=BIT},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="oReceiver != null">
+        o_receiver = #{oReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="oRecphone != null">
+        o_recphone = #{oRecphone,jdbcType=VARCHAR},
+      </if>
+      <if test="oRecaddres != null">
+        o_recaddres = #{oRecaddres,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lewdx.entity.OrderInfo">
+    update t_order_info
+    set o_express = #{oExpress,jdbcType=VARCHAR},
+      o_paytype = #{oPaytype,jdbcType=VARCHAR},
+      o_paycount = #{oPaycount,jdbcType=DOUBLE},
+      o_orderdate = #{oOrderdate,jdbcType=DATE},
+      o_orderstatus = #{oOrderstatus,jdbcType=INTEGER},
+      o_shippingstatus = #{oShippingstatus,jdbcType=BIT},
+      o_paystatus = #{oPaystatus,jdbcType=BIT},
+      userid = #{userid,jdbcType=INTEGER},
+      o_receiver = #{oReceiver,jdbcType=VARCHAR},
+      o_recphone = #{oRecphone,jdbcType=VARCHAR},
+      o_recaddres = #{oRecaddres,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!--通过订单编号模糊查询订单-->
+  <select id="getOrderByCondition" parameterType="int" resultMap="BaseResultMap">
+    select * from t_order_info where 1=1
+    <if test="_parameter!=null and _parameter!=''">
+      and id = #{id}
+    </if>
+    ORDER BY id DESC
+  </select>
+  <!--批量发货-->
+  <update id="batchDelivery">
+    UPDATE t_order_info set o_shippingstatus=1 WHERE id in
+    <foreach collection="ids" item="orderId" open="(" close=")" separator=",">
+      #{orderId}
+    </foreach>
+  </update>
+
+  <!--提交订单，并返回主键-->
+  <insert id="addOrder" parameterType="com.lewdx.entity.OrderInfo" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_order_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="oExpress != null">
+        o_express,
+      </if>
+      <if test="oPaytype != null">
+        o_paytype,
+      </if>
+      <if test="oPaycount != null">
+        o_paycount,
+      </if>
+      <if test="oOrderdate != null">
+        o_orderdate,
+      </if>
+      <if test="oOrderstatus != null">
+        o_orderstatus,
+      </if>
+      <if test="oShippingstatus != null">
+        o_shippingstatus,
+      </if>
+      <if test="oPaystatus != null">
+        o_paystatus,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="oReceiver != null">
+        o_receiver,
+      </if>
+      <if test="oRecphone != null">
+        o_recphone,
+      </if>
+      <if test="oRecaddres != null">
+        o_recaddres,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="oExpress != null">
+        #{oExpress,jdbcType=VARCHAR},
+      </if>
+      <if test="oPaytype != null">
+        #{oPaytype,jdbcType=VARCHAR},
+      </if>
+      <if test="oPaycount != null">
+        #{oPaycount,jdbcType=DOUBLE},
+      </if>
+      <if test="oOrderdate != null">
+        #{oOrderdate,jdbcType=DATE},
+      </if>
+      <if test="oOrderstatus != null">
+        #{oOrderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="oShippingstatus != null">
+        #{oShippingstatus,jdbcType=BIT},
+      </if>
+      <if test="oPaystatus != null">
+        #{oPaystatus,jdbcType=BIT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="oReceiver != null">
+        #{oReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="oRecphone != null">
+        #{oRecphone,jdbcType=VARCHAR},
+      </if>
+      <if test="oRecaddres != null">
+        #{oRecaddres,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+
+  <!--通过用户ID获取订单列表-->
+  <select id="getOrderListByUserId" parameterType="int" resultMap="BaseResultMap">
+    select * from t_order_info where userid = #{id} order by id desc
+  </select>
+
+  <!--取消订单-->
+  <update id="cancleOrder" parameterType="int">
+    update t_order_info set o_orderstatus=3,flag=0 where id=#{id}
+  </update>
+
+  <!--删除订单-->
+  <delete id="deleteOrderById" parameterType="int">
+    delete from t_order_info where id=#{id}
+  </delete>
+
+</mapper>
